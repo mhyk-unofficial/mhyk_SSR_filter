@@ -213,19 +213,18 @@ body {
                 <option value="attrDesc">屬性順序 (紫→紅)</option>
             </select>
         </div>
-    </div>
 <div class="trait-panel">
     <div class="trait-header-row">
         <details class="trait-details">
             <summary class="filter-label">
                 <span>五色特性篩選 (點擊展開／收合)</span>
             </summary>
-            </details>
+            <div id="traitContainer"></div> 
+        </details>
         
         <button class="reset-btn" onclick="clearTraits()">重設篩選</button>
     </div>
-
-    </div>
+</div>
 </div>
 
     <div style="font-size: 1.1em; font-weight: bold; color: #718096; text-align: right; margin-top: 15px;">
@@ -413,6 +412,7 @@ init();
 </body>
 
 </html>
+
 
 
 
