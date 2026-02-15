@@ -269,12 +269,15 @@
         }
 
         .badge {
-            font-size: 14px;
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-weight: bold;
-            border: 1.5px solid transparent;
-        }
+    font-size: 14px;
+    padding: 4px 10px; /* 稍微縮減 padding 讓邊框不擁擠 */
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* 移除原本的 border: 1.5px solid transparent; 讓 getStyle 控制 */
+}
 
         .skill-box {
             font-size: 1.0em;
@@ -469,18 +472,44 @@
         }
 
         function getStyle(text, isAttr) {
-            let themeKey = "pink";
-            if (THEMES[text]) themeKey = text;
-            else {
-                for (let key in TRAIT_LISTS) {
-                    for (let r in TRAIT_LISTS[key]) {
-                        if (TRAIT_LISTS[key][r].includes(text)) themeKey = key.substring(0, 3);
+    let themeKey = "pink";
+    let borderStyle = "border: 1.5px solid transparent;"; // 預設透明邊框
+
+    if (THEMES[text]) {
+        themeKey = text;
+    } else {
+        // 遍歷所有屬性顏色
+        for (let key in TRAIT_LISTS) {
+            // 遍歷該顏色下的所有稀有度 (金/銀/銅/無)
+            for (let r in TRAIT_LISTS[key]) {
+                if (TRAIT_LISTS[key][r].includes(text)) {
+                    themeKey = key.substring(0, 3);
+                    
+                    // 根據稀有度賦予邊框顏色
+                    if (r === "金") {
+                        borderStyle = "border: 2.2px solid #D4AF37 !important;"; // 金色
+                    } else if (r === "銀") {
+                        borderStyle = "border: 2.2px solid #C0C0C0 !important;"; // 銀色
+                    } else if (r === "銅") {
+                        borderStyle = "border: 2.2px solid #B87333 !important;"; // 銅色
+                    } else {
+                        // "無" 稀有度可以使用原本屬性的深色作為邊框，增加精緻感
+                        borderStyle = `border: 1.5px solid ${THEMES[themeKey].border} !important;`;
                     }
+                    break; 
                 }
             }
-            const t = THEMES[themeKey];
-            return isAttr ? `background:${t.main};color:#fff;` : `background:${t.bg};color:${t.text};border-color:${t.border};`;
         }
+    }
+
+    const t = THEMES[themeKey];
+    if (isAttr) {
+        return `background:${t.main};color:#fff;border: 1.5px solid ${t.main};`;
+    } else {
+        // 這裡把背景色、文字色、與新的稀有度邊框組合起來
+        return `background:${t.bg};color:${t.text};${borderStyle}`;
+    }
+}
 
         async function init() {
             try {
@@ -593,6 +622,7 @@
 </body>
 
 </html>
+
 
 
 
