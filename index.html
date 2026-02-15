@@ -171,8 +171,9 @@ body {
 <body>
 <div class="site-header">
     <h1>魔法使いの約束 SSR篩選器</h1>
-     <div class="update-note">最後更新：2026.02.15</div>
+    <div class="update-note">最後更新：2026.02.15</div>
 </div>
+
 <div class="filter-section">
     <div class="filter-row">
         <div class="filter-group">
@@ -198,10 +199,12 @@ body {
                 <option value="Pr.">Pr. 紫／自尊</option>
             </select>
         </div>
+
         <div class="filter-group">
             <span class="filter-label">技能</span>
             <select id="skillFilter"><option value="">所有技能</option></select>
         </div>
+
         <div class="filter-group">
             <span class="filter-label">排序</span>
             <select id="sortOrder">
@@ -213,26 +216,19 @@ body {
                 <option value="attrDesc">屬性順序 (紫→紅)</option>
             </select>
         </div>
-<div class="trait-panel">
-    <div class="trait-header-row">
-        <details class="trait-details">
-            <summary class="filter-label">
-                <span>五色特性篩選 (點擊展開／收合)</span>
-            </summary>
-            <div id="traitContainer"></div> 
-        </details>
-        
-        <button class="reset-btn" onclick="clearTraits()">重設篩選</button>
+    </div> <div class="trait-panel">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <span class="filter-label" style="font-size: 1.2rem;">五色特性篩選</span>
+            <button class="reset-btn" onclick="clearTraits()">重設特性</button>
+        </div>
+        <div id="traitContainer">
+            </div>
     </div>
-</div>
-</div>
 
     <div style="font-size: 1.1em; font-weight: bold; color: #718096; text-align: right; margin-top: 15px;">
         符合條件： <span id="count" style="color: #2d3748; font-size: 1.6em;">0</span> 張
     </div>
-</div>
-
-<div id="gallery" class="card-list">讀取資料中...</div>
+</div> <div id="gallery" class="card-list">讀取資料中...</div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbzsYksF3rzqZidac4_-qEO6vyxuZpufs6V1O9JwaDZX2BperimWn1abqVFscpxVGOdgXw/exec"; 
@@ -412,6 +408,7 @@ init();
 </body>
 
 </html>
+
 
 
 
