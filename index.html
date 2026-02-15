@@ -165,28 +165,35 @@ body {
             margin-top: 8px; color: #4a5568; border-left: 5px solid #cbd5e1;
             font-variant-east-asian: jp04; 
         }
-       /* --- 修正後的收合樣式 --- */
-<summary class="filter-label"> {
-    display: inline-flex !important; /* 強制使用行內彈性布局 */
-    width: fit-content !important;  /* 強制寬度符合內容 */
+       /* 建立一個橫向容器 */
+.trait-header-row {
+    display: flex;
+    justify-content: space-between; /* 讓左邊小框與右邊按鈕分開 */
     align-items: center;
+    margin-bottom: 10px;
+}
+
+/* 確保 details 本身不要撐滿 */
+.trait-details {
+    display: inline-block;
+}
+
+/* 修正你的 summary 樣式 */
+summary.filter-label {
+    display: inline-flex !important;
+    width: auto !important;
     padding: 8px 16px;
     background: #f8fafc;
     border-radius: 12px;
-    transition: background 0.2s;
-    user-select: none;
     cursor: pointer;
     border: 1px solid #edf2f7;
-    gap: 10px;
 }
 
-/* 展開後也維持同樣的寬度邏輯 */
+/* 移除 summary 展開時可能導致撐開的設定 */
 details[open] summary.filter-label {
-    display: inline-flex !important;
+    border-bottom: 1px dashed #cbd5e1;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
-    margin-bottom: 10px;
-    background: #edf2f7;
 }
     </style>
 </head>
@@ -237,15 +244,17 @@ details[open] summary.filter-label {
         </div>
     </div>
 
-    <div class="trait-panel">
-    <details>
+    <div class="trait-header-row">
+    <details class="trait-details">
         <summary class="filter-label">
             <span>五色特性篩選 (點擊展開／收合)</span>
-            <button class="reset-btn" onclick="event.stopPropagation(); clearTraits();">重設篩選</button>
         </summary>
-        
-        <div id="traitContainer" style="padding-top: 10px;">
+        <div id="traitContainer">
             </div>
+    </details>
+    
+    <button class="reset-btn" onclick="clearTraits()">重設篩選</button>
+</div>
     </details>
 </div>
 
@@ -434,6 +443,7 @@ init();
 </body>
 
 </html>
+
 
 
 
