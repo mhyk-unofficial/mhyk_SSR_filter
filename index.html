@@ -269,14 +269,18 @@
         }
 
         .badge {
-    font-size: 14px;
-    padding: 4px 10px; /* 稍微縮減 padding 讓邊框不擁擠 */
-    border-radius: 8px;
-    font-weight: bold;
+    margin: 2px; /* 增加標籤間距，避免粗邊框擠在一起 */
+    padding: 3px 10px; /* 稍微縮小內距以平衡視覺 */
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    /* 移除原本的 border: 1.5px solid transparent; 讓 getStyle 控制 */
+    line-height: 1;
+    /* 確保邊框不會因為盒子模型計算而撐大導致跑位 */
+    box-sizing: border-box; 
+}
+
+/* 針對篩選按鈕，選中時增加一個深色內陰影，避免金色邊框與亮色背景混淆 */
+.trait-btn.active {
+    box-shadow: inset 0 0 0 2px rgba(0,0,0,0.1); 
 }
 
         .skill-box {
@@ -473,30 +477,31 @@
 
         function getStyle(text, isAttr) {
     let themeKey = "pink";
-    let borderStyle = "border: 1.5px solid transparent;"; // 預設透明邊框
+    let borderStyle = "border: 1.5px solid transparent;"; // 預設
 
     if (THEMES[text]) {
         themeKey = text;
     } else {
-        // 遍歷所有屬性顏色
         for (let key in TRAIT_LISTS) {
-            // 遍歷該顏色下的所有稀有度 (金/銀/銅/無)
             for (let r in TRAIT_LISTS[key]) {
                 if (TRAIT_LISTS[key][r].includes(text)) {
                     themeKey = key.substring(0, 3);
                     
-                    // 根據稀有度賦予邊框顏色
+                    // --- 強化版邊框設定 ---
                     if (r === "金") {
-                        borderStyle = "border: 2.2px solid #D4AF37 !important;"; // 金色
+                        // 使用 3px 粗度，顏色改為飽和度較高的亮金
+                        borderStyle = "border: 3px solid #FFD700 !important; box-shadow: 0 0 5px rgba(255, 215, 0, 0.3);";
                     } else if (r === "銀") {
-                        borderStyle = "border: 2.2px solid #C0C0C0 !important;"; // 銀色
+                        // 使用 3px 粗度，顏色改為深銀色
+                        borderStyle = "border: 3px solid #A5A5A5 !important;";
                     } else if (r === "銅") {
-                        borderStyle = "border: 2.2px solid #B87333 !important;"; // 銅色
+                        // 使用 3px 粗度，顏色改為亮紅銅
+                        borderStyle = "border: 3px solid #B87333 !important;";
                     } else {
-                        // "無" 稀有度可以使用原本屬性的深色作為邊框，增加精緻感
+                        // 無稀有度：維持 1.5px，顏色使用該屬性的深色
                         borderStyle = `border: 1.5px solid ${THEMES[themeKey].border} !important;`;
                     }
-                    break; 
+                    break;
                 }
             }
         }
@@ -504,10 +509,10 @@
 
     const t = THEMES[themeKey];
     if (isAttr) {
-        return `background:${t.main};color:#fff;border: 1.5px solid ${t.main};`;
+        return `background:${t.main};color:#fff;border: 2px solid ${t.main};`;
     } else {
-        // 這裡把背景色、文字色、與新的稀有度邊框組合起來
-        return `background:${t.bg};color:${t.text};${borderStyle}`;
+        // 合併樣式，加上 font-weight 確保文字也清晰
+        return `background:${t.bg};color:${t.text};${borderStyle};font-weight: bold;`;
     }
 }
 
@@ -622,6 +627,7 @@
 </body>
 
 </html>
+
 
 
 
