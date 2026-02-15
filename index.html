@@ -165,32 +165,7 @@ body {
             margin-top: 8px; color: #4a5568; border-left: 5px solid #cbd5e1;
             font-variant-east-asian: jp04; 
         }
-       /* 確保標題與按鈕永遠各據一方 */
-.trait-header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%; /* 強制撐滿外層容器 */
-}
-
-/* 解決黏在一起的問題：給特性容器加上頂部間距 */
-#traitContainer {
-    margin-top: 15px; /* 這行可以拉開收合按鈕與下方紅藍黃按鈕的距離 */
-    padding: 10px;
-    background: #ffffff; /* 可選：加個底色讓區塊感更明顯 */
-    border-radius: 0 0 12px 12px;
-}
-
-/* 修正 details 展開後不影響排版的關鍵 */
-.trait-details {
-    display: block; /* 讓它在 flex 容器中表現穩定 */
-}
-
-/* 確保 summary 不會因為展開而變形 */
-summary.filter-label {
-    display: inline-flex !important;
-    white-space: nowrap; /* 防止文字換行 */
-}
+       
     </style>
 </head>
 <body>
@@ -438,6 +413,7 @@ init();
 </body>
 
 </html>
+
 
 
 
