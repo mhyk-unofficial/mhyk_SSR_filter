@@ -1,405 +1,609 @@
 <!DOCTYPE html>
-<html lang="ja"> <head>
+<html lang="ja">
+
+<head>
     <meta charset="UTF-8">
     <title>魔法使いの約束SSR篩選器</title>
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://mhyk-unofficial.github.io/mhyk_SSR_filter/">
-<meta property="og:title" content="魔法使いの約束 SSR篩選器">
-<meta property="og:description" content="快速篩選角色、屬性與五色特性">
-<meta property="og:image" content="https://imgbox.com/upload/edit/934688040/D0xq5KFiyRGFpxQf "> <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="魔法使いの約束 SSR篩選器">
-<meta name="twitter:description" content="快速篩選角色、屬性與五色特性">
-<meta name="twitter:image" content="https://imgbox.com/upload/edit/934688040/D0xq5KFiyRGFpxQf ">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://mhyk-unofficial.github.io/mhyk_SSR_filter/">
+    <meta property="og:title" content="魔法使いの約束 SSR篩選器">
+    <meta property="og:description" content="快速篩選角色、技能、屬性與五色特性">
+    <meta property="og:image" content="https://mhyk-unofficial.github.io/mhyk_SSR_filter/preview.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="魔法使いの約束 SSR篩選器">
+    <meta name="twitter:description" content="快速篩選角色、技能、屬性與五色特性">
+    <meta name="twitter:image" content="https://mhyk-unofficial.github.io/mhyk_SSR_filter/preview.jpg">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-    
+
     <style>
-        :root { --bg: #f4f7f9; --card-white: #ffffff; }
-
-/* 網站標題區樣式 */
-.site-header {
-    text-align: center;
-    padding: 5px 5px 10px; /* 您可以自由加大第一個數字(40)來增加上方空間 */
-}
-
-.site-header h1 {
-    font-size: 2rem;
-    color: #2d3748;
-    margin-bottom: 10px;
-    letter-spacing: 1px;
-}
-
-.site-header p {
-    color: #718096;
-    font-size: 1.1rem;
-    margin: 0;
-}
-
-.update-note {
-    display: inline-block;
-    background: #f4f7f9; /* 稍微深一點點跟背景區隔 */
-    color: #4a5568;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-body { 
-    font-family: 'Noto Sans JP', "PingFang TC", "Microsoft JhengHei", sans-serif; 
-    background: var(--bg); 
-    padding: 0 20px 20px; /* 頂部設為 0 */
-    color: #333; 
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-}
-
-        
-        .filter-section { 
-            background: var(--card-white); 
-            padding: 20px; border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
-            margin-bottom: 25px; 
+        :root {
+            --bg: #f4f7f9;
+            --card-white: #ffffff;
         }
-        
-        .filter-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 25px; align-items: end; }
-        .filter-group { display: flex; flex-direction: column; gap: 10px; }
-        .filter-label { font-size: 1.05rem; font-weight: bold; color: #555; display: flex; justify-content: space-between; align-items: center; }
-        
+
+        /* 網站標題區樣式 */
+        .site-header {
+            text-align: center;
+            padding: 5px 5px 10px;
+        }
+
+        .site-header h1 {
+            font-size: 2rem;
+            color: #2d3748;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .site-header p {
+            color: #718096;
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .update-note {
+            display: inline-block;
+            background: #f4f7f9;
+            color: #4a5568;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', "PingFang TC", "Microsoft JhengHei", sans-serif;
+            background: var(--bg);
+            padding: 0 20px 20px;
+            color: #333;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .filter-section {
+            background: var(--card-white);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+        }
+
+        .filter-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 25px;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .filter-label {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: #555;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         /* 下拉選單加大 */
-        select { padding: 12px; border: 2px solid #edf2f7; border-radius: 12px; font-size: 1rem; background: #fff; outline: none; transition: 0.3s; font-family: inherit; }
-        select:focus { border-color: #4a90e2; }
+        select {
+            padding: 12px;
+            border: 2px solid #edf2f7;
+            border-radius: 12px;
+            font-size: 1rem;
+            background: #fff;
+            outline: none;
+            transition: 0.3s;
+            font-family: inherit;
+        }
+
+        select:focus {
+            border-color: #4a90e2;
+        }
 
         /* 特性面板：分色、分級對齊 */
-        .trait-panel { border-top: 2px solid #edf2f7; padding-top: 20px; margin-top: 10px; }
-        
-        .color-section { 
-            background: #fdfdfd; 
-            border: 1px solid #f0f0f0; 
-            border-radius: 15px; 
-            padding: 10px 12px; 
-            margin-bottom: 10px; 
+        .trait-panel {
+            border-top: 2px solid #edf2f7;
+            padding-top: 20px;
+            margin-top: 10px;
         }
-        
-        .color-title { 
-            font-size: 1.15em; font-weight: bold; color: #444; margin-bottom: 8px; 
-            display: block; padding-left: 12px;
-        }
-        
-        .rarity-row { 
-                     display: flex; 
-                     align-items: flex-start;
-                     gap: 12px; margin-bottom: 5px; }
-        .rarity-label { 
-                       min-width: 40px;
-                       font-size: 1.2em;
-                       font-weight: bold;
-                        color: #777; 
-            text-align: center; background: #eee; border-radius: 6px; padding: 4px 0; margin-top: 4px;
-        }
-        
-        .trait-list { 
-                     display: flex;
-                     flex-wrap: wrap;
-                     gap: 5px; flex: 1; }
-        
-        /* 特性按鈕：加大字體 */
-        .trait-btn { 
-                    cursor: pointer;
-                    padding: 5px 12px;
-                    border-radius: 10px;
-                    font-size: 16px;
-                    font-weight: bold;
-                    transition: 0.2s;
-                    opacity: 0.4;
-                    filter: grayscale(80%);
-                    border: 2px solid transparent;
-                    user-select: none;
-                    white-space: nowrap;
-                    font-family: inherit;
-        }
-        .trait-btn:hover { opacity: 0.8; filter: grayscale(30%); }
-        .trait-btn.active { opacity: 1; filter: grayscale(0%); border-color: #333; transform: scale(1.05); box-shadow: 0 3px 8px rgba(0,0,0,0.15); }
 
-        /* 重設按鈕：加大 */
-        .reset-btn { 
-                    cursor: pointer;
-                    font-size: 15px;
-                    padding: 8px 20px;
-                    border-radius: 10px; 
-                    border: 2px solid #e2e8f0;
-                    background: #fff;
-                    font-weight: bold;
-                    color: #555;
-                    transition: 0.2s;
-                    font-family: inherit;
+        .color-section {
+            background: #fdfdfd;
+            border: 1px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
         }
-        .reset-btn:hover { background: #f7fafc; border-color: #cbd5e1; color: #222; }
+
+        .color-title {
+            font-size: 1.15em;
+            font-weight: bold;
+            color: #444;
+            margin-bottom: 8px;
+            display: block;
+            padding-left: 12px;
+        }
+
+        .rarity-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 5px;
+        }
+
+        .rarity-label {
+            min-width: 40px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #777;
+            text-align: center;
+            background: #eee;
+            border-radius: 6px;
+            padding: 4px 0;
+            margin-top: 4px;
+        }
+
+        .trait-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            flex: 1;
+        }
+
+        /* 特性按鈕：加大字體 */
+        .trait-btn {
+            cursor: pointer;
+            padding: 5px 12px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            transition: 0.2s;
+            opacity: 0.4;
+            filter: grayscale(80%);
+            border: 2px solid transparent;
+            user-select: none;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+
+        .trait-btn:hover {
+            opacity: 0.8;
+            filter: grayscale(30%);
+        }
+
+        .trait-btn.active {
+            opacity: 1;
+            filter: grayscale(0%);
+            border-color: #333;
+            transform: scale(1.05);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 重設按鈕 */
+        .reset-btn {
+            cursor: pointer;
+            font-size: 15px;
+            padding: 8px 20px;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+            background: #fff;
+            font-weight: bold;
+            color: #555;
+            transition: 0.2s;
+            font-family: inherit;
+        }
+
+        .reset-btn:hover {
+            background: #f7fafc;
+            border-color: #cbd5e1;
+            color: #222;
+        }
+
+        /* --- 展開收合按鈕樣式 --- */
+        .toggle-btn {
+            cursor: pointer;
+            font-size: 0.85rem;
+            padding: 3px 10px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            font-weight: bold;
+            color: #718096;
+            margin-left: 10px;
+            transition: 0.2s;
+            vertical-align: middle;
+        }
+
+        .toggle-btn:hover {
+            background: #edf2f7;
+            color: #2d3748;
+        }
+
+        .hidden {
+            display: none !important;
+        }
 
         /* 卡片顯示區 */
-        .card-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
-        .card { background: var(--card-white); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #edf2f7; transition: 0.3s; }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .card-img { width: 100%; height: 200px; object-fit: contain; background: #fdfdfd; padding: 15px; box-sizing: border-box; }
-        .card-body { padding: 12px 15px; }
-        .card-title { 
-                     font-size: 1.2em;
-                     font-weight: bold;
-                     margin-bottom: 10px;
-                     color: #1a202c;
-                     display: flex;
-                     flex-direction: column; 
-                     gap: 2px;               
-                     line-height: 1.3;       
-                      min-height: auto;}
-        
-        .tags-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
-        .badge { font-size: 14px; padding: 5px 10px; border-radius: 8px; font-weight: bold; border: 1.5px solid transparent; }
-        
-        /* 技能框：強制開啟日文漢字優化 */
-        .skill-box { 
-            font-size: 1.0em; background: #f7fafc; padding: 10px 12px; border-radius: 10px; 
-            margin-top: 8px; color: #4a5568; border-left: 5px solid #cbd5e1;
-            font-variant-east-asian: jp04; 
+        .card-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--card-white);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid #edf2f7;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            background: #fdfdfd;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+
+        .card-body {
+            padding: 12px 15px;
+        }
+
+        .card-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1a202c;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            line-height: 1.3;
+            min-height: auto;
+        }
+
+        .tags-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .badge {
+            font-size: 14px;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            border: 1.5px solid transparent;
+        }
+
+        .skill-box {
+            font-size: 1.0em;
+            background: #f7fafc;
+            padding: 10px 12px;
+            border-radius: 10px;
+            margin-top: 8px;
+            color: #4a5568;
+            border-left: 5px solid #cbd5e1;
+            font-variant-east-asian: jp04;
         }
     </style>
 </head>
+
 <body>
-<div class="site-header">
-    <h1>魔法使いの約束 SSR篩選器</h1>
-     <div class="update-note">最後更新：2026.02.15</div>
-</div>
-<div class="filter-section">
-    <div class="filter-row">
-        <div class="filter-group">
-            <span class="filter-label">角色</span>
-            <select id="nameSearch">
-                <option value="">所有角色</option>
-                <optgroup label="中央の國"><option value="オズ">オズ／奧茲</option><option value="アーサー">アーサー／亞瑟</option><option value="カイン">カイン／凱因</option><option value="リケ">リケ／利凱</option></optgroup>
-                <optgroup label="北の國"><option value="スノウ">スノウ／思諾</option><option value="ホワイト">ホワイト／懷特</option><option value="ミスラ">ミスラ／密斯拉</option><option value="オーエン">オーエン／歐文</option><option value="ブラッドリー">ブラッドリー／布拉德利</option></optgroup>
-                <optgroup label="東の國"><option value="ファウスト">ファウスト／浮士德</option><option value="シノ">シノ／西諾</option><option value="ヒースクリフ">ヒースクリフ／希斯克里夫</option><option value="ネロ">ネロ／尼洛</option></optgroup>
-                <optgroup label="西の國"><option value="シャイロック">シャイロック／夏洛克</option><option value="ムル">ムル／姆魯</option><option value="クロエ">クロエ／庫羅耶</option><option value="ラスティカ">ラスティカ／拉斯堤卡</option></optgroup>
-                <optgroup label="南の國"><option value="フィガロ">フィガロ／費加洛</option><option value="ルチル">ルチル／路契爾</option><option value="レノックス">レノックス／雷諾克斯</option><option value="ミチル">ミチル／米契爾</option></optgroup>
-            </select>
+    <div class="site-header">
+        <h1>魔法使いの約束 SSR篩選器</h1>
+        <div class="update-note">最後更新：2026.02.15</div>
+    </div>
+
+    <div class="filter-section">
+        <div class="filter-row">
+            <div class="filter-group">
+                <span class="filter-label">角色</span>
+                <select id="nameSearch">
+                    <option value="">所有角色</option>
+                    <optgroup label="中央の國">
+                        <option value="オズ">オズ／奧茲</option>
+                        <option value="アーサー">アーサー／亞瑟</option>
+                        <option value="カイン">カイン／凱因</option>
+                        <option value="リケ">リケ／利凱</option>
+                    </optgroup>
+                    <optgroup label="北の國">
+                        <option value="スノウ">スノウ／思諾</option>
+                        <option value="ホワイト">ホワイト／懷特</option>
+                        <option value="ミスラ">ミスラ／密斯拉</option>
+                        <option value="オーエン">オーエン／歐文</option>
+                        <option value="ブラッドリー">ブラッドリー／布拉德利</option>
+                    </optgroup>
+                    <optgroup label="東の國">
+                        <option value="ファウスト">ファウスト／浮士德</option>
+                        <option value="シノ">シノ／西諾</option>
+                        <option value="ヒースクリフ">ヒースクリフ／希斯克里夫</option>
+                        <option value="ネロ">ネロ／尼洛</option>
+                    </optgroup>
+                    <optgroup label="西の國">
+                        <option value="シャイロック">シャイロック／夏洛克</option>
+                        <option value="ムル">ムル／姆魯</option>
+                        <option value="クロエ">クロエ／庫羅耶</option>
+                        <option value="ラスティカ">ラスティカ／拉斯堤卡</option>
+                    </optgroup>
+                    <optgroup label="南の國">
+                        <option value="フィガロ">フィガロ／費加洛</option>
+                        <option value="ルチル">ルチル／路契爾</option>
+                        <option value="レノックス">レノックス／雷諾克斯</option>
+                        <option value="ミチル">ミチル／米契爾</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <span class="filter-label">屬性</span>
+                <select id="attrFilter">
+                    <option value="">所有屬性</option>
+                    <option value="Pa.">Pa. 紅／熱情</option>
+                    <option value="Ha.">Ha. 黃／喜悅</option>
+                    <option value="Re.">Re. 綠／放鬆</option>
+                    <option value="Co.">Co. 藍／冷酷</option>
+                    <option value="Pr.">Pr. 紫／自尊</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <span class="filter-label">技能</span>
+                <select id="skillFilter">
+                    <option value="">所有技能</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <span class="filter-label">排序</span>
+                <select id="sortOrder">
+                    <option value="idAsc">圖鑑編號 (舊→新)</option>
+                    <option value="idDesc">圖鑑編號 (新→舊)</option>
+                    <option value="charAsc">角色順序 (中央→南)</option>
+                    <option value="charDesc">角色順序 (南→中央)</option>
+                    <option value="attrAsc">屬性順序 (紅→紫)</option>
+                    <option value="attrDesc">屬性順序 (紫→紅)</option>
+                </select>
+            </div>
         </div>
 
-        <div class="filter-group">
-            <span class="filter-label">屬性</span>
-            <select id="attrFilter">
-                <option value="">所有屬性</option>
-                <option value="Pa.">Pa. 紅／熱情</option>
-                <option value="Ha.">Ha. 黃／喜悅</option>
-                <option value="Re.">Re. 綠／放鬆</option>
-                <option value="Co.">Co. 藍／冷酷</option>
-                <option value="Pr.">Pr. 紫／自尊</option>
-            </select>
+        <div class="trait-panel">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <div>
+                    <span class="filter-label" style="font-size: 1.2rem; display: inline-block;">五色特性篩選</span>
+                    <button id="toggleBtn" class="toggle-btn" onclick="toggleTraits()">展開</button>
+                </div>
+                <button class="reset-btn" onclick="clearTraits()">重設特性</button>
+            </div>
+            <div id="traitContainer" class="hidden"></div>
         </div>
-        <div class="filter-group">
-            <span class="filter-label">技能</span>
-            <select id="skillFilter"><option value="">所有技能</option></select>
-        </div>
-        <div class="filter-group">
-            <span class="filter-label">排序</span>
-            <select id="sortOrder">
-                <option value="idAsc">圖鑑編號 (舊→新)</option>
-                <option value="idDesc">圖鑑編號 (新→舊)</option>
-                <option value="charAsc">角色順序 (中央→南)</option>
-                <option value="charDesc">角色順序 (南→中央)</option>
-                <option value="attrAsc">屬性順序 (紅→紫)</option>
-                <option value="attrDesc">屬性順序 (紫→紅)</option>
-            </select>
+
+        <div style="font-size: 1.1em; font-weight: bold; color: #718096; text-align: right; margin-top: 15px;">
+            符合條件： <span id="count" style="color: #2d3748; font-size: 1.6em;">0</span> 張
         </div>
     </div>
 
-    <div class="trait-panel">
-        <div class="filter-label" style="margin-bottom:20px; font-size: 1.15rem;">
-            <span>五色特性篩選（可複選）</span>
-            <button class="reset-btn" onclick="clearTraits()">重設篩選</button>
-        </div>
-        <div id="traitContainer"></div>
-    </div>
+    <div id="gallery" class="card-list">讀取資料中...</div>
 
-    <div style="font-size: 1.1em; font-weight: bold; color: #718096; text-align: right; margin-top: 15px;">
-        符合條件： <span id="count" style="color: #2d3748; font-size: 1.6em;">0</span> 張
-    </div>
-</div>
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbzsYksF3rzqZidac4_-qEO6vyxuZpufs6V1O9JwaDZX2BperimWn1abqVFscpxVGOdgXw/exec";
+        const CHAR_ORDER = ["オズ", "アーサー", "カイン", "リケ", "スノウ", "ホワイト", "ミスラ", "オーエン", "ブラッドリー", "ファウスト", "シノ", "ヒースクリフ", "ネロ", "シャイロック", "ムル", "クロエ", "ラスティカ", "フィガロ", "ルチル", "レノックス", "ミチル"];
+        const ATTR_ORDER = { "Pa.": 1, "Ha.": 2, "Re.": 3, "Co.": 4, "Pr.": 5 };
+        const THEMES = {
+            "Pa.": { main: "#cf2727", bg: "#FFE5E5", text: "#961010", border: "#FF8A8A" },
+            "Ha.": { main: "#cfa227", bg: "#FFF4D1", text: "#8A6D1C", border: "#EBC152" },
+            "Re.": { main: "#27cf62", bg: "#D7F9E2", text: "#167B38", border: "#6EEB95" },
+            "Co.": { main: "#276dcf", bg: "#DCEEFF", text: "#164B8F", border: "#74AEF5" },
+            "Pr.": { main: "#a227cf", bg: "#F2E1FF", text: "#681985", border: "#C684EB" },
+            "pink": { main: "#f065c8", bg: "#FFF0F9", text: "#B82E8B", border: "#F7A8DB" }
+        };
 
-<div id="gallery" class="card-list">讀取資料中...</div>
-
-<script>
-const API_URL = "https://script.google.com/macros/s/AKfycbzsYksF3rzqZidac4_-qEO6vyxuZpufs6V1O9JwaDZX2BperimWn1abqVFscpxVGOdgXw/exec"; 
-
-const CHAR_ORDER = ["オズ","アーサー","カイン","リケ","スノウ","ホワイト","ミスラ","オーエン","ブラッドリー","ファウスト","シノ","ヒースクリフ","ネロ","シャイロック","ムル","クロエ","ラスティカ","フィガロ","ルチル","レノックス","ミチル"];
-const ATTR_ORDER = {"Pa.": 1, "Ha.": 2, "Re.": 3, "Co.": 4, "Pr.": 5};
-
-const THEMES = {
-    "Pa.": { main: "#cf2727", bg: "#FFE5E5", text: "#961010", border: "#FF8A8A" },
-    "Ha.": { main: "#cfa227", bg: "#FFF4D1", text: "#8A6D1C", border: "#EBC152" },
-    "Re.": { main: "#27cf62", bg: "#D7F9E2", text: "#167B38", border: "#6EEB95" },
-    "Co.": { main: "#276dcf", bg: "#DCEEFF", text: "#164B8F", border: "#74AEF5" },
-    "Pr.": { main: "#a227cf", bg: "#F2E1FF", text: "#681985", border: "#C684EB" },
-    "pink": { main: "#f065c8", bg: "#FFF0F9", text: "#B82E8B", border: "#F7A8DB" }
-};
-
-const TRAIT_LISTS = {
-    "Pa. 紅": {
-        "金": ["勇気","愛情","勝利","破天荒","夢中"],
-        "銀": ["希望","情熱","熱血","絢爛","審美眼","豪奢","独創"],
-        "銅": ["派手","閃き","活力","奇抜","熱狂","多才","酔狂"],
-        "無": ["積極","元気","自信","愉快","氣まま"]
-    },
-    "Ha. 白": {
-        "金": ["神聖","正義","威厳","勇敢","不屈"],
-        "銀": ["信念","祝福","純粋","貫禄","指導力","栄誉","理想"],
-        "銅": ["清潔","平和","公正","克己","先導","素直","邁進"],
-        "無": ["真面目","正直","無垢","健気","忍耐"]
-    },
-    "Re. 綠": {
-        "金": ["自然","幸運","再生","真心","団結"],
-        "銀": ["堅実","古風","楽観","愛着","親密","朴訥","柔和"],
-        "銅": ["我慢","癒し","安定","共栄","友好","天然","自適"],
-        "無": ["安らぎ","爽やか","頑固","素朴","大らか"]
-    },
-    "Co. 藍": {
-        "金": ["信頼","誠実","残酷","高潔","慎重"],
-        "銀": ["知性","忠実","自由","感傷","質実","几帳面","謙虚"],
-        "銅": ["繊細","優しさ","広大","浄化","物憂げ","厚情","同調"],
-        "無": ["寂しさ","內気","冷静","閑寂","平穏"]
-    },
-    "Pr. 紫": {
-        "金": ["神秘","優雅","高貴","矜持","強者"],
-        "銀": ["意地悪","芸術","奔放","強靭","執着","君臨","鮮烈"],
-        "銅": ["陽気","魅力","上品","自尊心","不敵","精悍","豪胆"],
-        "無": ["孤独","二面性","色気","獰猛","野生"]
-    }
-};
-
-const SKILL_TEMPLATES = [
-    "毎ターンのスタミナ回復量が+10", 
-    "ターン開始時、一定の確率でメインキャラのスタミナ+50", 
-    "3人以上で交流すると確率でスタミナが回復。交流人數が多いほど確率と回復量が上がる",
-    "一定の確率で、OOの獲得時に+70%のボーナスがつく", 
-    "パート開始時、一定の確率でメインキャラのOOが+50", 
-    "パート開始時、20％の確率でレアリティ4以下のOOの特性が手に入る",
-    "一緒に交流すると、20%の確率で參加したパートナーキャラからの特性付與率+6%", 
-    "体調が絶好調の時、50%の確率で交流に参加したパートナーキャラからの特性付與率+12%", 
-    "体調が良好の時、60%の確率で交流に参加したパートナーキャラからの特性付與率+12%",
-    "休むの大成功率+70％", 
-    "一定の確率で、3ターン間のキャラエピソード發生率が+60％", 
-    "一定の確率で、3ターン間のスポットエピソード發生率が+60％", 
-    "一定の確率で、3ターン間の全体エピソード發生率が+60％",
-    "一緒に交流すると、10%の確率で成功を大成功にする", 
-    "一緒に交流すると、ハプニング率-15"
-];
-
-let allCards = [];
-let selectedTraits = new Set();
-
-function convertToOO(skill) {
-    if (!skill) return null;
-    // 優先精準判斷耐力版
-    if (skill.includes("スタミナ+50")) return SKILL_TEMPLATES[1];
-    if (skill.includes("獲得時に+70%")) return SKILL_TEMPLATES[3];
-    if (skill.includes("メインキャラの") && skill.includes("+50")) return SKILL_TEMPLATES[4];
-    if (skill.includes("20％の確率でレアリティ4以下")) return SKILL_TEMPLATES[5];
-    if (skill.includes("特性付與率+6%")) return SKILL_TEMPLATES[6];
-    if (skill.includes("絶好調") && skill.includes("+12%")) return SKILL_TEMPLATES[7];
-    if (skill.includes("良好") && skill.includes("+12%")) return SKILL_TEMPLATES[8];
-    if (skill.includes("キャラエピソード")) return SKILL_TEMPLATES[10];
-    if (skill.includes("スポットエピソード")) return SKILL_TEMPLATES[11];
-    if (skill.includes("全体エピソード")) return SKILL_TEMPLATES[12];
-    if (skill.includes("大成功にする")) return SKILL_TEMPLATES[13];
-    return SKILL_TEMPLATES.find(t => skill.includes(t.substring(0, 10))) || skill;
-}
-
-function getStyle(text, isAttr) {
-    let themeKey = "pink";
-    if (THEMES[text]) themeKey = text;
-    else {
-        for(let key in TRAIT_LISTS) {
-            for(let r in TRAIT_LISTS[key]) {
-                if(TRAIT_LISTS[key][r].includes(text)) themeKey = key.substring(0,3);
+        const TRAIT_LISTS = {
+            "Pa. 紅": {
+                "金": ["勇気", "愛情", "勝利", "破天荒", "夢中"],
+                "銀": ["希望", "情熱", "熱血", "絢爛", "審美眼", "豪奢", "独創"],
+                "銅": ["派手", "閃き", "活力", "奇抜", "熱狂", "多才", "酔狂"],
+                "無": ["積極", "元気", "自信", "愉快", "氣まま"]
+            },
+            "Ha. 白": {
+                "金": ["神聖", "正義", "威嚴", "勇敢", "不屈"],
+                "銀": ["信念", "祝福", "純粋", "貫祿", "指導力", "榮譽", "理想"],
+                "銅": ["清潔", "平和", "公正", "克己", "先導", "素直", "邁進"],
+                "無": ["真面目", "正直", "無垢", "健気", "忍耐"]
+            },
+            "Re. 綠": {
+                "金": ["自然", "幸運", "再生", "真心", "團結"],
+                "銀": ["堅實", "古風", "樂觀", "愛著", "親密", "朴訥", "柔和"],
+                "銅": ["我慢", "癒し", "安定", "共榮", "友好", "天然", "自適"],
+                "無": ["安らぎ", "爽やか", "頑固", "素朴", "大らか"]
+            },
+            "Co. 藍": {
+                "金": ["信頼", "誠實", "殘酷", "高潔", "慎重"],
+                "銀": ["知性", "忠實", "自由", "感傷", "質實", "几帳面", "謙虛"],
+                "銅": ["繊細", "優しさ", "廣大", "淨化", "物憂げ", "厚情", "同調"],
+                "無": ["寂しさ", "內氣", "冷靜", "閑寂", "平穩"]
+            },
+            "Pr. 紫": {
+                "金": ["神秘", "優雅", "高貴", "矜持", "強者"],
+                "銀": ["意地惡", "藝術", "奔放", "強韌", "執著", "君臨", "鮮烈"],
+                "銅": ["陽氣", "魅力", "上品", "自尊心", "不敵", "精悍", "豪胆"],
+                "無": ["孤獨", "二面性", "色氣", "獰猛", "野生"]
             }
-        }
-    }
-    const t = THEMES[themeKey];
-    return isAttr ? `background:${t.main};color:#fff;` : `background:${t.bg};color:${t.text};border-color:${t.border};`;
-}
+        };
 
-async function init() {
-    try {
-        const res = await fetch(API_URL);
-        allCards = await res.json();
-        const container = document.getElementById('traitContainer');
-        for (let group in TRAIT_LISTS) {
-            const colorSection = document.createElement('div');
-            colorSection.className = 'color-section';
-            colorSection.style.borderLeft = `8px solid ${THEMES[group.substring(0,3)].main}`;
-            colorSection.innerHTML = `<span class="color-title">${group}</span>`;
-            for (let r in TRAIT_LISTS[group]) {
-                const row = document.createElement('div'); row.className = 'rarity-row';
-                row.innerHTML = `<span class="rarity-label">${r}</span>`;
-                const list = document.createElement('div'); list.className = 'trait-list';
-                TRAIT_LISTS[group][r].forEach(t => {
-                    const btn = document.createElement('div');
-                    btn.className = 'trait-btn'; btn.innerText = t; btn.style = getStyle(t, false);
-                    btn.onclick = () => {
-                        if(selectedTraits.has(t)) selectedTraits.delete(t); else selectedTraits.add(t);
-                        btn.classList.toggle('active'); render();
-                    };
-                    list.appendChild(btn);
+        const SKILL_TEMPLATES = [
+            "毎ターンのスタミナ回復量が+10",
+            "ターン開始時、一定の確率でメインキャラのスタミナ+50",
+            "3人以上で交流すると確率でスタミナが回復。交流人數が多いほど確率と回復量が上がる",
+            "一定の確率で、OOの獲得時に+70%のボーナスがつく",
+            "パート開始時、一定の確率でメインキャラのOOが+50",
+            "パート開始時、20％の確率でレアリティ4以下のOOの特性が手に入る",
+            "一緒に交流すると、20%の確率で參加したパートナーキャラからの特性付與率+6%",
+            "體調が絶好調の時、50%の確率で交流に參加したパートナーキャラからの特性付與率+12%",
+            "體調が良好の時、60%の確率で交流に參加したパートナーキャラからの特性付與率+12%",
+            "休むの大成功率+70％",
+            "一定の確率で、3ターン間のキャラエピソード發生率が+60％",
+            "一定の確率で、3ターン間のスポットエピソード發生率が+60％",
+            "一定の確率で、3ターン間の全体エピソード發生率が+60％",
+            "一緒に交流すると、10%の確率で成功を大成功にする",
+            "一緒に交流すると、ハプニング率-15"
+        ];
+
+        let allCards = [];
+        let selectedTraits = new Set();
+
+        function convertToOO(skill) {
+            if (!skill) return null;
+            if (skill.includes("スタミナ+50")) return SKILL_TEMPLATES[1];
+            if (skill.includes("獲得時に+70%")) return SKILL_TEMPLATES[3];
+            if (skill.includes("メインキャラの") && skill.includes("+50")) return SKILL_TEMPLATES[4];
+            if (skill.includes("20％の確率でレアリティ4以下")) return SKILL_TEMPLATES[5];
+            if (skill.includes("特性付與率+6%")) return SKILL_TEMPLATES[6];
+            if (skill.includes("體調が絶好調")) return SKILL_TEMPLATES[7];
+            if (skill.includes("體調が良好")) return SKILL_TEMPLATES[8];
+            if (skill.includes("キャラエピソード")) return SKILL_TEMPLATES[10];
+            if (skill.includes("スポットエピソード")) return SKILL_TEMPLATES[11];
+            if (skill.includes("全体エピソード")) return SKILL_TEMPLATES[12];
+            if (skill.includes("大成功にする")) return SKILL_TEMPLATES[13];
+            return SKILL_TEMPLATES.find(t => skill.includes(t.substring(0, 10))) || skill;
+        }
+
+        function getStyle(text, isAttr) {
+            let themeKey = "pink";
+            if (THEMES[text]) themeKey = text;
+            else {
+                for (let key in TRAIT_LISTS) {
+                    for (let r in TRAIT_LISTS[key]) {
+                        if (TRAIT_LISTS[key][r].includes(text)) themeKey = key.substring(0, 3);
+                    }
+                }
+            }
+            const t = THEMES[themeKey];
+            return isAttr ? `background:${t.main};color:#fff;` : `background:${t.bg};color:${t.text};border-color:${t.border};`;
+        }
+
+        async function init() {
+            try {
+                const res = await fetch(API_URL);
+                allCards = await res.json();
+                const container = document.getElementById('traitContainer');
+                for (let group in TRAIT_LISTS) {
+                    const colorSection = document.createElement('div');
+                    colorSection.className = 'color-section';
+                    colorSection.style.borderLeft = `8px solid ${THEMES[group.substring(0, 3)].main}`;
+                    colorSection.innerHTML = `<span class="color-title">${group}</span>`;
+                    for (let r in TRAIT_LISTS[group]) {
+                        const row = document.createElement('div');
+                        row.className = 'rarity-row';
+                        row.innerHTML = `<span class="rarity-label">${r}</span>`;
+                        const list = document.createElement('div');
+                        list.className = 'trait-list';
+                        TRAIT_LISTS[group][r].forEach(t => {
+                            const btn = document.createElement('div');
+                            btn.className = 'trait-btn';
+                            btn.innerText = t;
+                            btn.style = getStyle(t, false);
+                            btn.onclick = () => {
+                                if (selectedTraits.has(t)) selectedTraits.delete(t);
+                                else selectedTraits.add(t);
+                                btn.classList.toggle('active');
+                                render();
+                            };
+                            list.appendChild(btn);
+                        });
+                        row.appendChild(list);
+                        colorSection.appendChild(row);
+                    }
+                    container.appendChild(colorSection);
+                }
+                const sSelect = document.getElementById('skillFilter');
+                SKILL_TEMPLATES.forEach(t => {
+                    const o = document.createElement('option');
+                    o.value = t;
+                    o.innerText = t;
+                    sSelect.appendChild(o);
                 });
-                row.appendChild(list); colorSection.appendChild(row);
+                ['nameSearch', 'attrFilter', 'skillFilter', 'sortOrder'].forEach(id => document.getElementById(id).addEventListener('change', render));
+                render();
+            } catch (e) {
+                document.getElementById('gallery').innerHTML = "資料載入失敗。";
             }
-            container.appendChild(colorSection);
         }
-        const sSelect = document.getElementById('skillFilter');
-        SKILL_TEMPLATES.forEach(t => { const o = document.createElement('option'); o.value = t; o.innerText = t; sSelect.appendChild(o); });
-        ['nameSearch', 'attrFilter', 'skillFilter', 'sortOrder'].forEach(id => document.getElementById(id).addEventListener('change', render));
-        render();
-    } catch (e) { document.getElementById('gallery').innerHTML = "資料載入失敗。"; }
-}
 
-function clearTraits() {
-    selectedTraits.clear();
-    document.querySelectorAll('.trait-btn').forEach(b => b.classList.remove('active'));
-    render();
-}
+        function clearTraits() {
+            selectedTraits.clear();
+            document.querySelectorAll('.trait-btn').forEach(b => b.classList.remove('active'));
+            render();
+        }
 
-function render() {
-    const nameV = document.getElementById('nameSearch').value.toLowerCase();
-    const attrV = document.getElementById('attrFilter').value;
-    const skillV = document.getElementById('skillFilter').value;
-    const sortV = document.getElementById('sortOrder').value;
-    let filtered = allCards.filter(card => {
-        const mName = card["卡片名稱"].toLowerCase().includes(nameV);
-        const mAttr = !attrV || card["卡片屬性"] === attrV;
-        const mSkill = !skillV || convertToOO(card["技能1"]) === skillV || convertToOO(card["技能2"]) === skillV;
-        const cardTraits = []; for(let i=1; i<=8; i++) if(card[`特性${i}`]) cardTraits.push(card[`特性${i}`]);
-        const mTraits = Array.from(selectedTraits).every(t => cardTraits.includes(t));
-        return mName && mAttr && mSkill && mTraits;
-    });
-    filtered.sort((a, b) => {
-        if (sortV === 'idAsc') return (parseInt(a["圖鑑編號"]) || 0) - (parseInt(b["圖鑑編號"]) || 0);
-        if (sortV === 'idDesc') return (parseInt(b["圖鑑編號"]) || 0) - (parseInt(a["圖鑑編號"]) || 0);
-        if (sortV.startsWith('attr')) {
-            const vA = ATTR_ORDER[a["卡片屬性"]] || 99, vB = ATTR_ORDER[b["卡片屬性"]] || 99;
-            return sortV === 'attrAsc' ? vA - vB : vB - vA;
+        function render() {
+            const nameV = document.getElementById('nameSearch').value.toLowerCase();
+            const attrV = document.getElementById('attrFilter').value;
+            const skillV = document.getElementById('skillFilter').value;
+            const sortV = document.getElementById('sortOrder').value;
+            let filtered = allCards.filter(card => {
+                const mName = card["卡片名稱"].toLowerCase().includes(nameV);
+                const mAttr = !attrV || card["卡片屬性"] === attrV;
+                const mSkill = !skillV || convertToOO(card["技能1"]) === skillV || convertToOO(card["技能2"]) === skillV;
+                const cardTraits = [];
+                for (let i = 1; i <= 8; i++) if (card[`特性${i}`]) cardTraits.push(card[`特性${i}`]);
+                const mTraits = Array.from(selectedTraits).every(t => cardTraits.includes(t));
+                return mName && mAttr && mSkill && mTraits;
+            });
+            filtered.sort((a, b) => {
+                if (sortV === 'idAsc') return (parseInt(a["圖鑑編號"]) || 0) - (parseInt(b["圖鑑編號"]) || 0);
+                if (sortV === 'idDesc') return (parseInt(b["圖鑑編號"]) || 0) - (parseInt(a["圖鑑編號"]) || 0);
+                if (sortV.startsWith('attr')) {
+                    const vA = ATTR_ORDER[a["卡片屬性"]] || 99, vB = ATTR_ORDER[b["卡片屬性"]] || 99;
+                    return sortV === 'attrAsc' ? vA - vB : vB - vA;
+                }
+                if (sortV.startsWith('char')) {
+                    const idxA = CHAR_ORDER.indexOf(CHAR_ORDER.find(c => a["卡片名稱"].includes(c)));
+                    const idxB = CHAR_ORDER.indexOf(CHAR_ORDER.find(c => b["卡片名稱"].includes(c)));
+                    return sortV === 'charAsc' ? idxA - idxB : idxB - idxA;
+                }
+                return 0;
+            });
+            document.getElementById('count').innerText = filtered.length;
+            document.getElementById('gallery').innerHTML = filtered.map(card => {
+                let tHtml = "";
+                for (let i = 1; i <= 8; i++) {
+                    const t = card[`特性${i}`];
+                    if (t) tHtml += `<span class="badge" style="${getStyle(t, false)}">${t}</span>`;
+                }
+                return `<div class="card"><img class="card-img" src="${card["縮圖來源網址（勿動）"] || ''}" loading="lazy"><div class="card-body"><div class="card-title">${card["卡片名稱"]}</div><div class="tags-row"><span class="badge" style="${getStyle(card["卡片屬性"], true)}">${card["卡片屬性"]}</span>${tHtml}</div><div class="skill-box"><strong>技能1：</strong> ${card["技能1"]}</div><div class="skill-box"><strong>技能2：</strong> ${card["技能2"]}</div></div></div>`;
+            }).join('');
         }
-        if (sortV.startsWith('char')) {
-            const idxA = CHAR_ORDER.indexOf(CHAR_ORDER.find(c => a["卡片名稱"].includes(c)));
-            const idxB = CHAR_ORDER.indexOf(CHAR_ORDER.find(c => b["卡片名稱"].includes(c)));
-            return sortV === 'charAsc' ? idxA - idxB : idxB - idxA;
+
+        function toggleTraits() {
+            const container = document.getElementById('traitContainer');
+            const btn = document.getElementById('toggleBtn');
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                btn.innerText = '收合';
+            } else {
+                container.classList.add('hidden');
+                btn.innerText = '展開';
+            }
         }
-        return 0;
-    });
-    document.getElementById('count').innerText = filtered.length;
-    document.getElementById('gallery').innerHTML = filtered.map(card => {
-        let tHtml = ""; for(let i=1; i<=8; i++) { const t = card[`特性${i}`]; if(t) tHtml += `<span class="badge" style="${getStyle(t, false)}">${t}</span>`; }
-        return `<div class="card"><img class="card-img" src="${card["縮圖來源網址（勿動）"] || ''}" loading="lazy"><div class="card-body"><div class="card-title">${card["卡片名稱"]}</div><div class="tags-row"><span class="badge" style="${getStyle(card["卡片屬性"], true)}">${card["卡片屬性"]}</span>${tHtml}</div><div class="skill-box"><strong>技能1：</strong> ${card["技能1"]}</div><div class="skill-box"><strong>技能2：</strong> ${card["技能2"]}</div></div></div>`;
-    }).join('');
-}
-init();
-</script>
+
+        init();
+    </script>
 </body>
+
 </html>
