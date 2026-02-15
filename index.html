@@ -47,7 +47,33 @@
     margin-top: 15px;
     font-weight: bold;
 }
+/* 讓 summary 看起來像個按鈕或標籤 */
+summary {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #f8fafc;
+    border-radius: 12px;
+    transition: background 0.2s;
+    user-select: none;
+}
 
+summary:hover {
+    background: #edf2f7;
+}
+
+/* 隱藏預設的黑色小箭頭 (Chrome/Safari) */
+summary::-webkit-details-marker {
+    display: none;
+}
+
+/* 自定義展開時的樣式 */
+details[open] summary {
+    border-bottom: 1px dashed #e2e8f0;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 10px;
+}
 body { 
     font-family: 'Noto Sans JP', "PingFang TC", "Microsoft JhengHei", sans-serif; 
     background: var(--bg); 
@@ -215,12 +241,16 @@ body {
     </div>
 
     <div class="trait-panel">
-        <div class="filter-label" style="margin-bottom:20px; font-size: 1.15rem;">
-            <span>五色特性篩選（可複選）</span>
-            <button class="reset-btn" onclick="clearTraits()">重設篩選</button>
-        </div>
-        <div id="traitContainer"></div>
-    </div>
+    <details>
+        <summary class="filter-label" style="cursor: pointer; list-style: none;">
+            <span>五色特性篩選 (點擊展開／收合)</span>
+            <button class="reset-btn" onclick="event.stopPropagation(); clearTraits();" style="margin-left: auto;">重設篩選</button>
+        </summary>
+        
+        <div id="traitContainer" style="margin-top: 15px;">
+            </div>
+    </details>
+</div>
 
     <div style="font-size: 1.1em; font-weight: bold; color: #718096; text-align: right; margin-top: 15px;">
         符合條件： <span id="count" style="color: #2d3748; font-size: 1.6em;">0</span> 張
@@ -407,6 +437,7 @@ init();
 </body>
 
 </html>
+
 
 
 
