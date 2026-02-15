@@ -47,33 +47,7 @@
     margin-top: 15px;
     font-weight: bold;
 }
-/* 讓 summary 看起來像個按鈕或標籤 */
-summary {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background: #f8fafc;
-    border-radius: 12px;
-    transition: background 0.2s;
-    user-select: none;
-}
 
-summary:hover {
-    background: #edf2f7;
-}
-
-/* 隱藏預設的黑色小箭頭 (Chrome/Safari) */
-summary::-webkit-details-marker {
-    display: none;
-}
-
-/* 自定義展開時的樣式 */
-details[open] summary {
-    border-bottom: 1px dashed #e2e8f0;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    margin-bottom: 10px;
-}
 body { 
     font-family: 'Noto Sans JP', "PingFang TC", "Microsoft JhengHei", sans-serif; 
     background: var(--bg); 
@@ -437,6 +411,7 @@ init();
 </body>
 
 </html>
+
 
 
 
