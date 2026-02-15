@@ -34,12 +34,6 @@
             letter-spacing: 1px;
         }
 
-        .site-header p {
-            color: #718096;
-            font-size: 1.1rem;
-            margin: 0;
-        }
-
         .update-note {
             display: inline-block;
             background: #f4f7f9;
@@ -86,12 +80,8 @@
             font-size: 1.05rem;
             font-weight: bold;
             color: #555;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
-        /* 下拉選單加大 */
         select {
             padding: 12px;
             border: 2px solid #edf2f7;
@@ -107,7 +97,7 @@
             border-color: #4a90e2;
         }
 
-        /* 特性面板：分色、分級對齊 */
+        /* 特性面板 */
         .trait-panel {
             border-top: 2px solid #edf2f7;
             padding-top: 20px;
@@ -157,7 +147,6 @@
             flex: 1;
         }
 
-        /* 特性按鈕：加大字體 */
         .trait-btn {
             cursor: pointer;
             padding: 5px 12px;
@@ -186,7 +175,6 @@
             box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
         }
 
-        /* 重設按鈕 */
         .reset-btn {
             cursor: pointer;
             font-size: 15px;
@@ -206,24 +194,25 @@
             color: #222;
         }
 
-        /* --- 展開收合按鈕樣式 --- */
+        /* --- 新增：獨立展開收合按鈕樣式 --- */
         .toggle-btn {
             cursor: pointer;
-            font-size: 0.85rem;
-            padding: 3px 10px;
+            font-size: 0.9rem;
+            padding: 4px 12px;
             border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
-            font-weight: bold;
+            border: 1px solid #cbd5e1;
+            background: #fff;
             color: #718096;
             margin-left: 10px;
             transition: 0.2s;
+            font-weight: bold;
             vertical-align: middle;
         }
 
         .toggle-btn:hover {
-            background: #edf2f7;
-            color: #2d3748;
+            background: #f8fafc;
+            border-color: #4a90e2;
+            color: #4a90e2;
         }
 
         .hidden {
@@ -269,11 +258,7 @@
             font-weight: bold;
             margin-bottom: 10px;
             color: #1a202c;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
             line-height: 1.3;
-            min-height: auto;
         }
 
         .tags-row {
@@ -384,8 +369,8 @@
 
         <div class="trait-panel">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <div>
-                    <span class="filter-label" style="font-size: 1.2rem; display: inline-block;">五色特性篩選</span>
+                <div style="display: flex; align-items: center;">
+                    <span class="filter-label" style="font-size: 1.2rem;">五色特性篩選(可複選)</span>
                     <button id="toggleBtn" class="toggle-btn" onclick="toggleTraits()">展開</button>
                 </div>
                 <button class="reset-btn" onclick="clearTraits()">重設特性</button>
@@ -590,6 +575,7 @@
             }).join('');
         }
 
+        // --- 控制展開收合的函數 ---
         function toggleTraits() {
             const container = document.getElementById('traitContainer');
             const btn = document.getElementById('toggleBtn');
