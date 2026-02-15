@@ -165,31 +165,29 @@ body {
             margin-top: 8px; color: #4a5568; border-left: 5px solid #cbd5e1;
             font-variant-east-asian: jp04; 
         }
-        /* --- 這裡開始是新增的收合樣式 --- */
-        /* 縮小收合框，寬度隨內容變動 */
-        summary {
-            display: inline-flex; /* 關鍵：讓框寬度隨內容自動縮放 */
-            align-items: center;
-            padding: 8px 16px; /* 內距調整，讓框看起來比例更好 */
-            background: #f8fafc;
-            border-radius: 12px;
-            transition: background 0.2s;
-            user-select: none;
-            cursor: pointer;
-            border: 1px solid #edf2f7;
-            gap: 10px; /* 文字與按鈕之間的間距 */
-        }
+       /* --- 修正後的收合樣式 --- */
+summary.filter-label {
+    display: inline-flex !important; /* 強制使用行內彈性布局 */
+    width: fit-content !important;  /* 強制寬度符合內容 */
+    align-items: center;
+    padding: 8px 16px;
+    background: #f8fafc;
+    border-radius: 12px;
+    transition: background 0.2s;
+    user-select: none;
+    cursor: pointer;
+    border: 1px solid #edf2f7;
+    gap: 10px;
+}
 
-        /* 展開後可以讓它寬度維持或稍微變長 */
-        details[open] summary {
-            inline-flex; /* 展開後可視需求變回長條，或維持 inline-flex */
-            border-bottom: 1px dashed #cbd5e1;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            margin-bottom: 10px;
-            background: #edf2f7;
-        }
-        /* --- 這裡結束 --- */
+/* 展開後也維持同樣的寬度邏輯 */
+details[open] summary.filter-label {
+    display: inline-flex !important;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    margin-bottom: 10px;
+    background: #edf2f7;
+}
     </style>
 </head>
 <body>
@@ -436,6 +434,7 @@ init();
 </body>
 
 </html>
+
 
 
 
