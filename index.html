@@ -165,35 +165,31 @@ body {
             margin-top: 8px; color: #4a5568; border-left: 5px solid #cbd5e1;
             font-variant-east-asian: jp04; 
         }
-       /* 建立一個橫向容器 */
+       /* 確保標題與按鈕永遠各據一方 */
 .trait-header-row {
     display: flex;
-    justify-content: space-between; /* 讓左邊小框與右邊按鈕分開 */
+    justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    width: 100%; /* 強制撐滿外層容器 */
 }
 
-/* 確保 details 本身不要撐滿 */
+/* 解決黏在一起的問題：給特性容器加上頂部間距 */
+#traitContainer {
+    margin-top: 15px; /* 這行可以拉開收合按鈕與下方紅藍黃按鈕的距離 */
+    padding: 10px;
+    background: #ffffff; /* 可選：加個底色讓區塊感更明顯 */
+    border-radius: 0 0 12px 12px;
+}
+
+/* 修正 details 展開後不影響排版的關鍵 */
 .trait-details {
-    display: inline-block;
+    display: block; /* 讓它在 flex 容器中表現穩定 */
 }
 
-/* 修正你的 summary 樣式 */
-<summary class="filter-label"> {
+/* 確保 summary 不會因為展開而變形 */
+summary.filter-label {
     display: inline-flex !important;
-    width: auto !important;
-    padding: 8px 16px;
-    background: #f8fafc;
-    border-radius: 12px;
-    cursor: pointer;
-    border: 1px solid #edf2f7;
-}
-
-/* 移除 summary 展開時可能導致撐開的設定 */
-details[open] summary.filter-label {
-    border-bottom: 1px dashed #cbd5e1;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    white-space: nowrap; /* 防止文字換行 */
 }
     </style>
 </head>
@@ -243,19 +239,18 @@ details[open] summary.filter-label {
             </select>
         </div>
     </div>
-
+<div class="trait-panel">
     <div class="trait-header-row">
-    <details class="trait-details">
-        <summary class="filter-label">
-            <span>五色特性篩選 (點擊展開／收合)</span>
-        </summary>
-        <div id="traitContainer">
-            </div>
-    </details>
-    
-    <button class="reset-btn" onclick="clearTraits()">重設篩選</button>
-</div>
-    </details>
+        <details class="trait-details">
+            <summary class="filter-label">
+                <span>五色特性篩選 (點擊展開／收合)</span>
+            </summary>
+            </details>
+        
+        <button class="reset-btn" onclick="clearTraits()">重設篩選</button>
+    </div>
+
+    </div>
 </div>
 
     <div style="font-size: 1.1em; font-weight: bold; color: #718096; text-align: right; margin-top: 15px;">
@@ -443,6 +438,7 @@ init();
 </body>
 
 </html>
+
 
 
 
