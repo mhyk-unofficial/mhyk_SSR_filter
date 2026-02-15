@@ -166,33 +166,23 @@ body {
             font-variant-east-asian: jp04; 
         }
         /* --- 這裡開始是新增的收合樣式 --- */
-        /* 讓 summary 看起來像個按鈕或標籤 */
+        /* 縮小收合框，寬度隨內容變動 */
         summary {
-            display: flex;
+            display: inline-flex; /* 關鍵：讓框寬度隨內容自動縮放 */
             align-items: center;
-            padding: 10px 15px;
+            padding: 8px 16px; /* 內距調整，讓框看起來比例更好 */
             background: #f8fafc;
             border-radius: 12px;
             transition: background 0.2s;
             user-select: none;
             cursor: pointer;
             border: 1px solid #edf2f7;
+            gap: 10px; /* 文字與按鈕之間的間距 */
         }
 
-        summary:hover {
-            background: #edf2f7;
-        }
-
-        /* 隱藏預設的黑色小箭頭 */
-        summary::-webkit-details-marker {
-            display: none;
-        }
-        summary {
-            list-style: none; /* 給 Firefox 用 */
-        }
-
-        /* 自定義展開時的樣式 */
+        /* 展開後可以讓它寬度維持或稍微變長 */
         details[open] summary {
+            display: flex; /* 展開後可視需求變回長條，或維持 inline-flex */
             border-bottom: 1px dashed #cbd5e1;
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
@@ -446,6 +436,7 @@ init();
 </body>
 
 </html>
+
 
 
 
