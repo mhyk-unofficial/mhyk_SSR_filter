@@ -165,6 +165,41 @@ body {
             margin-top: 8px; color: #4a5568; border-left: 5px solid #cbd5e1;
             font-variant-east-asian: jp04; 
         }
+        /* --- 這裡開始是新增的收合樣式 --- */
+        /* 讓 summary 看起來像個按鈕或標籤 */
+        summary {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: background 0.2s;
+            user-select: none;
+            cursor: pointer;
+            border: 1px solid #edf2f7;
+        }
+
+        summary:hover {
+            background: #edf2f7;
+        }
+
+        /* 隱藏預設的黑色小箭頭 */
+        summary::-webkit-details-marker {
+            display: none;
+        }
+        summary {
+            list-style: none; /* 給 Firefox 用 */
+        }
+
+        /* 自定義展開時的樣式 */
+        details[open] summary {
+            border-bottom: 1px dashed #cbd5e1;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            margin-bottom: 10px;
+            background: #edf2f7;
+        }
+        /* --- 這裡結束 --- */
     </style>
 </head>
 <body>
@@ -216,12 +251,12 @@ body {
 
     <div class="trait-panel">
     <details>
-        <summary class="filter-label" style="cursor: pointer; list-style: none;">
+        <summary class="filter-label">
             <span>五色特性篩選 (點擊展開／收合)</span>
-            <button class="reset-btn" onclick="event.stopPropagation(); clearTraits();" style="margin-left: auto;">重設篩選</button>
+            <button class="reset-btn" onclick="event.stopPropagation(); clearTraits();">重設篩選</button>
         </summary>
         
-        <div id="traitContainer" style="margin-top: 15px;">
+        <div id="traitContainer" style="padding-top: 10px;">
             </div>
     </details>
 </div>
@@ -411,6 +446,7 @@ init();
 </body>
 
 </html>
+
 
 
 
