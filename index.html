@@ -9,7 +9,15 @@
         :root { --bg: #f4f7f9; --card-white: #ffffff; }
         .site-header { text-align: center; padding: 5px 5px 10px; }
         .site-header h1 { font-size: 2rem; color: #2d3748; margin-bottom: 10px; letter-spacing: 1px; }
-        .update-note { display: inline-block; background: #f4f7f9; color: #4a5568; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; margin-top: 15px; font-weight: bold; }
+        .update-note { display: inline-block;
+                       background: #fdf2f8; /* 淺粉色背景，可隨意換成 #f4f7f9 */
+                       color: #db2777;      /* 修改顏色：這裡換成深粉色 */
+                       padding: 6px 16px;
+                       border-radius: 20px;
+                       font-size: 1.0rem;   /* 修改大小：從 0.85rem 變大到 1.0rem */
+                       margin-top: 15px;
+                       font-weight: bold;
+                       border: 1px solid #f9a8d4; /* 加個小邊框 */ }
         body { font-family: 'Noto Sans JP', "PingFang TC", "Microsoft JhengHei", sans-serif; background: var(--bg); padding: 0 20px 20px; color: #333; line-height: 1.6; }
         .filter-section { background: var(--card-white); padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); margin-bottom: 25px; }
         .filter-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 25px; align-items: end; }
@@ -297,22 +305,35 @@
         }
 
         function render() {
-            const keywordV = document.getElementById('keywordSearch').value.toLowerCase(); 
-            const nameV = document.getElementById('nameSearch').value.toLowerCase();
-            const attrV = document.getElementById('attrFilter').value;
-            const skillV = document.getElementById('skillFilter').value;
-            const sortV = document.getElementById('sortOrder').value;
+    const keywordV = document.getElementById('keywordSearch').value.toLowerCase(); 
+    const nameV = document.getElementById('nameSearch').value.toLowerCase();
+    const attrV = document.getElementById('attrFilter').value;
+    const skillV = document.getElementById('skillFilter').value;
+    const sortV = document.getElementById('sortOrder').value;
 
-            let filtered = allCards.filter(card => {
-                const mKeyword = !keywordV || card["卡片名稱"].toLowerCase().includes(keywordV) || card["技能1"].includes(keywordV) || card["技能2"].includes(keywordV);
-                const mName = card["卡片名稱"].toLowerCase().includes(nameV);
-                const mAttr = !attrV || card["卡片屬性"] === attrV;
-                const mSkill = !skillV || convertToOO(card["技能1"]) === skillV || convertToOO(card["技能2"]) === skillV;
-                const cardTraits = [];
-                for (let i = 1; i <= 8; i++) if (card[`特性${i}`]) cardTraits.push(card[`特性${i}`]);
-                const mTraits = Array.from(selectedTraits).every(t => cardTraits.includes(t));
-                return mKeyword && mName && mAttr && mSkill && mTraits;
-            });
+    let filtered = allCards.filter(card => {
+        // 整理這張卡所有的特性成一個陣列
+        const cardTraits = [];
+        for (let i = 1; i <= 8; i++) if (card[`特性${i}`]) cardTraits.push(card[`特性${i}`]);
+        
+        // 關鍵字搜尋：包含卡名、技能1、技能2、或是任何一個特性名稱
+        const mKeyword = !keywordV || 
+                         card["卡片名稱"].toLowerCase().includes(keywordV) || 
+                         card["技能1"].includes(keywordV) || 
+                         card["技能2"].includes(keywordV) ||
+                         cardTraits.some(t => t.includes(keywordV)); // <-- 新增特性關鍵字搜尋
+
+        const mName = card["卡片名稱"].toLowerCase().includes(nameV);
+        const mAttr = !attrV || card["卡片屬性"] === attrV;
+        const mSkill = !skillV || convertToOO(card["技能1"]) === skillV || convertToOO(card["技能2"]) === skillV;
+        
+        // 五色按鈕複選篩選
+        const mTraits = Array.from(selectedTraits).every(t => cardTraits.includes(t));
+        
+        return mKeyword && mName && mAttr && mSkill && mTraits;
+    });
+
+    // ... 後續排序與渲染代碼維持不變
 
             filtered.sort((a, b) => {
                 if (sortV === 'idAsc') return (parseInt(a["圖鑑編號"]) || 0) - (parseInt(b["圖鑑編號"]) || 0);
@@ -354,6 +375,7 @@
     </script>
 </body>
 </html>
+
 
 
 
