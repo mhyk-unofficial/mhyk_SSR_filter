@@ -300,6 +300,33 @@
 
     <div class="filter-section">
         <div class="filter-row">
+            <div class="filter-row">
+    <div class="filter-group">
+        <span class="filter-label">關鍵字搜尋</span>
+        <input type="text" id="keywordSearch" placeholder="搜尋角色或卡名..." 
+               style="padding: 12px; border: 2px solid #edf2f7; border-radius: 12px; font-size: 1rem; outline: none; transition: 0.3s; font-family: inherit;">
+    </div>
+
+    <div class="filter-group">
+        <span class="filter-label">角色選單</span>
+        <select id="nameSearch">
+            <option value="">所有角色</option>
+            </select>
+    </div>
+
+    <div class="filter-group">
+        <span class="filter-label">屬性</span>
+        <select id="attrFilter">
+            <option value="">所有屬性</option>
+            <option value="Pa.">Pa. 紅／熱情</option>
+            <option value="Ha.">Ha. 黃／喜悅</option>
+            <option value="Re.">Re. 綠／放鬆</option>
+            <option value="Co.">Co. 藍／冷酷</option>
+            <option value="Pr.">Pr. 紫／自尊</option>
+        </select>
+    </div>
+
+    </div>
             <div class="filter-group">
                 <span class="filter-label">角色</span>
                 <select id="nameSearch">
@@ -552,7 +579,8 @@
                     o.innerText = t;
                     sSelect.appendChild(o);
                 });
-                ['nameSearch', 'attrFilter', 'skillFilter', 'sortOrder'].forEach(id => document.getElementById(id).addEventListener('change', render));
+                const filterIds = ['keywordSearch', 'nameSearch', 'attrFilter', 'skillFilter', 'sortOrder'];
+            filterIds.forEach(id => document.getElementById(id).addEventListener('input', render));
                 render();
             } catch (e) {
                 document.getElementById('gallery').innerHTML = "資料載入失敗。";
@@ -565,7 +593,28 @@
             render();
         }
 
-        function render() {
+        function render() {// --- 在這裡插入第 1 行：讀取輸入框的值 ---
+    const keywordV = document.getElementById('keywordSearch').value.toLowerCase(); 
+
+    const nameV = document.getElementById('nameSearch').value.toLowerCase();
+    const attrV = document.getElementById('attrFilter').value;
+    const skillV = document.getElementById('skillFilter').value;
+    const sortV = document.getElementById('sortOrder').value;
+
+    let filtered = allCards.filter(card => {
+        // --- 在這裡插入第 2 行：設定關鍵字過濾邏輯 ---
+        const mKeyword = !keywordV || card["卡片名稱"].toLowerCase().includes(keywordV) || card["技能1"].includes(keywordV) || card["技能2"].includes(keywordV);
+
+        const mName = card["卡片名稱"].toLowerCase().includes(nameV);
+        const mAttr = !attrV || card["卡片屬性"] === attrV;
+        const mSkill = !skillV || convertToOO(card["技能1"]) === skillV || convertToOO(card["技能2"]) === skillV;
+        const cardTraits = [];
+        for (let i = 1; i <= 8; i++) if (card[`特性${i}`]) cardTraits.push(card[`特性${i}`]);
+        const mTraits = Array.from(selectedTraits).every(t => cardTraits.includes(t));
+        
+        // --- 在這裡修改第 3 行：把 mKeyword 放進 return 裡 ---
+        return mKeyword && mName && mAttr && mSkill && mTraits;
+    });
             const nameV = document.getElementById('nameSearch').value.toLowerCase();
             const attrV = document.getElementById('attrFilter').value;
             const skillV = document.getElementById('skillFilter').value;
@@ -622,6 +671,7 @@
 </body>
 
 </html>
+
 
 
 
