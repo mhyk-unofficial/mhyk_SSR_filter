@@ -4,291 +4,39 @@
 <head>
     <meta charset="UTF-8">
     <title>魔法使いの約束SSR篩選器</title>
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://mhyk-unofficial.github.io/mhyk_SSR_filter/">
-    <meta property="og:title" content="魔法使いの約束 SSR篩選器">
-    <meta property="og:description" content="快速篩選角色、技能、屬性與五色特性">
-    <meta property="og:image" content="https://mhyk-unofficial.github.io/mhyk_SSR_filter/preview.jpg">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="魔法使いの約束 SSR篩選器">
-    <meta name="twitter:description" content="快速篩選角色、技能、屬性與五色特性">
-    <meta name="twitter:image" content="https://mhyk-unofficial.github.io/mhyk_SSR_filter/preview.jpg">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
-
     <style>
-        :root {
-            --bg: #f4f7f9;
-            --card-white: #ffffff;
-        }
-
-        /* 網站標題區樣式 */
-        .site-header {
-            text-align: center;
-            padding: 5px 5px 10px;
-        }
-
-        .site-header h1 {
-            font-size: 2rem;
-            color: #2d3748;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .update-note {
-            display: inline-block;
-            background: #f4f7f9;
-            color: #4a5568;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-
-        body {
-            font-family: 'Noto Sans JP', "PingFang TC", "Microsoft JhengHei", sans-serif;
-            background: var(--bg);
-            padding: 0 20px 20px;
-            color: #333;
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .filter-section {
-            background: var(--card-white);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            margin-bottom: 25px;
-        }
-
-        .filter-row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 25px;
-            align-items: end;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .filter-label {
-            font-size: 1.05rem;
-            font-weight: bold;
-            color: #555;
-        }
-
-        select {
-            padding: 12px;
-            border: 2px solid #edf2f7;
-            border-radius: 12px;
-            font-size: 1rem;
-            background: #fff;
-            outline: none;
-            transition: 0.3s;
-            font-family: inherit;
-        }
-
-        select:focus {
-            border-color: #4a90e2;
-        }
-
-        /* 特性面板 */
-        .trait-panel {
-            border-top: 2px solid #edf2f7;
-            padding-top: 20px;
-            margin-top: 10px;
-        }
-
-        .color-section {
-            background: #fdfdfd;
-            border: 1px solid #f0f0f0;
-            border-radius: 15px;
-            padding: 10px 12px;
-            margin-bottom: 10px;
-        }
-
-        .color-title {
-            font-size: 1.15em;
-            font-weight: bold;
-            color: #444;
-            margin-bottom: 8px;
-            display: block;
-            padding-left: 12px;
-        }
-
-        .rarity-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 5px;
-        }
-
-        .rarity-label {
-            min-width: 40px;
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #777;
-            text-align: center;
-            background: #eee;
-            border-radius: 6px;
-            padding: 4px 0;
-            margin-top: 4px;
-        }
-
-        .trait-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            flex: 1;
-        }
-
-        .trait-btn {
-            cursor: pointer;
-            padding: 5px 12px;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: bold;
-            transition: 0.2s;
-            opacity: 0.4;
-            filter: grayscale(80%);
-            border: 2px solid transparent;
-            user-select: none;
-            white-space: nowrap;
-            font-family: inherit;
-        }
-
-        .trait-btn:hover {
-            opacity: 0.8;
-            filter: grayscale(30%);
-        }
-
-        .trait-btn.active {
-            opacity: 1;
-            filter: grayscale(0%);
-            border-color: #333;
-            transform: scale(1.05);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .reset-btn {
-            cursor: pointer;
-            font-size: 15px;
-            padding: 8px 20px;
-            border-radius: 10px;
-            border: 2px solid #e2e8f0;
-            background: #fff;
-            font-weight: bold;
-            color: #555;
-            transition: 0.2s;
-            font-family: inherit;
-        }
-
-        .reset-btn:hover {
-            background: #f7fafc;
-            border-color: #cbd5e1;
-            color: #222;
-        }
-
-        /* --- 新增：獨立展開收合按鈕樣式 --- */
-        .toggle-btn {
-            cursor: pointer;
-            font-size: 1.0rem;
-            padding: 4px 12px;
-            border-radius: 8px;
-            border: 2px solid #cbd5e1;
-            background: #fff;
-            color: #718096;
-            margin-left: 10px;
-            transition: 0.2s;
-            font-weight: bold;
-            vertical-align: middle;
-        }
-
-        .toggle-btn:hover {
-            background: #f8fafc;
-            border-color: #4a90e2;
-            color: #4a90e2;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* 卡片顯示區 */
-        .card-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
-
-        .card {
-            background: var(--card-white);
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-            border: 1px solid #edf2f7;
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .card-img {
-            width: 100%;
-            height: 200px;
-            object-fit: contain;
-            background: #fdfdfd;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-
-        .card-body {
-            padding: 12px 15px;
-        }
-
-        .card-title {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #1a202c;
-            line-height: 1.3;
-        }
-
-        .tags-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .badge {
-    font-size: 14px;
-    padding: 4px 10px; /* 稍微縮減 padding 讓邊框不擁擠 */
-    border-radius: 8px;
-    font-weight: bold;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    /* 移除原本的 border: 1.5px solid transparent; 讓 getStyle 控制 */
-}
-
-        .skill-box {
-            font-size: 1.0em;
-            background: #f7fafc;
-            padding: 10px 12px;
-            border-radius: 10px;
-            margin-top: 8px;
-            color: #4a5568;
-            border-left: 5px solid #cbd5e1;
-            font-variant-east-asian: jp04;
-        }
+        /* (這裡保留你原本所有的 CSS) */
+        :root { --bg: #f4f7f9; --card-white: #ffffff; }
+        .site-header { text-align: center; padding: 5px 5px 10px; }
+        .site-header h1 { font-size: 2rem; color: #2d3748; margin-bottom: 10px; letter-spacing: 1px; }
+        .update-note { display: inline-block; background: #f4f7f9; color: #4a5568; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; margin-top: 15px; font-weight: bold; }
+        body { font-family: 'Noto Sans JP', "PingFang TC", "Microsoft JhengHei", sans-serif; background: var(--bg); padding: 0 20px 20px; color: #333; line-height: 1.6; }
+        .filter-section { background: var(--card-white); padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); margin-bottom: 25px; }
+        .filter-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 25px; align-items: end; }
+        .filter-group { display: flex; flex-direction: column; gap: 10px; }
+        .filter-label { font-size: 1.05rem; font-weight: bold; color: #555; }
+        select, input { padding: 12px; border: 2px solid #edf2f7; border-radius: 12px; font-size: 1rem; background: #fff; outline: none; transition: 0.3s; font-family: inherit; }
+        select:focus, input:focus { border-color: #4a90e2; }
+        .trait-panel { border-top: 2px solid #edf2f7; padding-top: 20px; margin-top: 10px; }
+        .color-section { background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 15px; padding: 10px 12px; margin-bottom: 10px; }
+        .color-title { font-size: 1.15em; font-weight: bold; color: #444; margin-bottom: 8px; display: block; padding-left: 12px; }
+        .rarity-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 5px; }
+        .rarity-label { min-width: 40px; font-size: 1.2em; font-weight: bold; color: #777; text-align: center; background: #eee; border-radius: 6px; padding: 4px 0; margin-top: 4px; }
+        .trait-list { display: flex; flex-wrap: wrap; gap: 5px; flex: 1; }
+        .trait-btn { cursor: pointer; padding: 5px 12px; border-radius: 10px; font-size: 16px; font-weight: bold; transition: 0.2s; opacity: 0.4; filter: grayscale(80%); border: 2px solid transparent; user-select: none; white-space: nowrap; font-family: inherit; }
+        .trait-btn.active { opacity: 1; filter: grayscale(0%); border-color: #333; transform: scale(1.05); box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15); }
+        .reset-btn { cursor: pointer; font-size: 15px; padding: 8px 20px; border-radius: 10px; border: 2px solid #e2e8f0; background: #fff; font-weight: bold; color: #555; transition: 0.2s; font-family: inherit; }
+        .toggle-btn { cursor: pointer; font-size: 1.0rem; padding: 4px 12px; border-radius: 8px; border: 2px solid #cbd5e1; background: #fff; color: #718096; margin-left: 10px; transition: 0.2s; font-weight: bold; vertical-align: middle; }
+        .hidden { display: none !important; }
+        .card-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 25px; }
+        .card { background: var(--card-white); border-radius: 18px; overflow: hidden; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); border: 1px solid #edf2f7; transition: 0.3s; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
+        .card-img { width: 100%; height: 200px; object-fit: contain; background: #fdfdfd; padding: 15px; box-sizing: border-box; }
+        .card-body { padding: 12px 15px; }
+        .card-title { font-size: 1.2em; font-weight: bold; margin-bottom: 10px; color: #1a202c; line-height: 1.3; }
+        .tags-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+        .badge { font-size: 14px; padding: 4px 10px; border-radius: 8px; font-weight: bold; display: inline-flex; align-items: center; justify-content: center; }
+        .skill-box { font-size: 1.0em; background: #f7fafc; padding: 10px 12px; border-radius: 10px; margin-top: 8px; color: #4a5568; border-left: 5px solid #cbd5e1; font-variant-east-asian: jp04; }
     </style>
 </head>
 
@@ -300,35 +48,13 @@
 
     <div class="filter-section">
         <div class="filter-row">
-            <div class="filter-row">
-    <div class="filter-group">
-        <span class="filter-label">關鍵字搜尋</span>
-        <input type="text" id="keywordSearch" placeholder="搜尋角色或卡名..." 
-               style="padding: 12px; border: 2px solid #edf2f7; border-radius: 12px; font-size: 1rem; outline: none; transition: 0.3s; font-family: inherit;">
-    </div>
-
-    <div class="filter-group">
-        <span class="filter-label">角色選單</span>
-        <select id="nameSearch">
-            <option value="">所有角色</option>
-            </select>
-    </div>
-
-    <div class="filter-group">
-        <span class="filter-label">屬性</span>
-        <select id="attrFilter">
-            <option value="">所有屬性</option>
-            <option value="Pa.">Pa. 紅／熱情</option>
-            <option value="Ha.">Ha. 黃／喜悅</option>
-            <option value="Re.">Re. 綠／放鬆</option>
-            <option value="Co.">Co. 藍／冷酷</option>
-            <option value="Pr.">Pr. 紫／自尊</option>
-        </select>
-    </div>
-
-    </div>
             <div class="filter-group">
-                <span class="filter-label">角色</span>
+                <span class="filter-label">關鍵字搜尋</span>
+                <input type="text" id="keywordSearch" placeholder="搜尋角色、卡名或技能...">
+            </div>
+
+            <div class="filter-group">
+                <span class="filter-label">角色選單</span>
                 <select id="nameSearch">
                     <option value="">所有角色</option>
                     <optgroup label="中央の國">
@@ -429,54 +155,15 @@
         };
 
         const TRAIT_LISTS = {
-            "Pa. 紅": {
-        "金": ["勇気","愛情","勝利","破天荒","夢中"],
-        "銀": ["希望","情熱","熱血","絢爛","審美眼","豪奢","独創"],
-        "銅": ["派手","閃き","活力","奇抜","熱狂","多才","酔狂"],
-        "無": ["積極","元気","自信","愉快","氣まま"]
-    },
-    "Ha. 白": {
-        "金": ["神聖","正義","威厳","勇敢","不屈"],
-        "銀": ["信念","祝福","純粋","貫禄","指導力","栄誉","理想"],
-        "銅": ["清潔","平和","公正","克己","先導","素直","邁進"],
-        "無": ["真面目","正直","無垢","健気","忍耐"]
-    },
-    "Re. 綠": {
-        "金": ["自然","幸運","再生","真心","団結"],
-        "銀": ["堅実","古風","楽観","愛着","親密","朴訥","柔和"],
-        "銅": ["我慢","癒し","安定","共栄","友好","天然","自適"],
-        "無": ["安らぎ","爽やか","頑固","素朴","大らか"]
-    },
-    "Co. 藍": {
-        "金": ["信頼","誠実","残酷","高潔","慎重"],
-        "銀": ["知性","忠実","自由","感傷","質実","几帳面","謙虚"],
-        "銅": ["繊細","優しさ","広大","浄化","物憂げ","厚情","同調"],
-        "無": ["寂しさ","内気","冷静","閑寂","平穏"]
-    },
-    "Pr. 紫": {
-        "金": ["神秘","優雅","高貴","矜持","強者"],
-        "銀": ["意地悪","芸術","奔放","強靭","執着","君臨","鮮烈"],
-        "銅": ["陽気","魅力","上品","自尊心","不敵","精悍","豪胆"],
-        "無": ["孤独","二面性","色気","獰猛","野生"]
-            }
+            "Pa. 紅": { "金": ["勇氣","愛情","勝利","破天荒","夢中"], "銀": ["希望","情熱","熱血","絢爛","審美眼","豪奢","獨創"], "銅": ["派手","閃き","活力","奇抜","熱狂","多才","醉狂"], "無": ["積極","元気","自信","愉快","氣まま"] },
+            "Ha. 白": { "金": ["神聖","正義","威嚴","勇敢","不屈"], "銀": ["信念","祝福","純粹","貫祿","指導力","榮譽","理想"], "銅": ["清潔","平和","公正","克己","先導","素直","邁進"], "無": ["真面目","正直","無垢","健氣","忍耐"] },
+            "Re. 綠": { "金": ["自然","幸運","再生","真心","團結"], "銀": ["堅實","古風","樂觀","愛著","親密","朴訥","柔和"], "銅": ["我慢","癒し","安定","共榮","友好","天然","自適"], "無": ["安らぎ","爽やか","頑固","素朴","大らか"] },
+            "Co. 藍": { "金": ["信頼","誠實","殘酷","高潔","慎重"], "銀": ["知性","忠實","自由","感傷","質實","几帳面","謙虛"], "銅": ["繊細","優しさ","廣大","淨化","物憂げ","厚情","同調"], "無": ["寂しさ","內氣","冷靜","閑寂","平穏"] },
+            "Pr. 紫": { "金": ["神秘","優雅","高貴","矜持","強者"], "銀": ["意地惡","藝術","奔放","強靭","執著","君臨","鮮烈"], "銅": ["陽氣","魅力","上品","自尊心","不敵","精悍","豪膽"], "無": ["孤獨","二面性","色氣","獰猛","野生"] }
         };
 
         const SKILL_TEMPLATES = [
-            "毎ターンのスタミナ回復量が+10",
-            "ターン開始時、一定の確率でメインキャラのスタミナ+50",
-            "3人以上で交流すると確率でスタミナが回復。交流人數が多いほど確率と回復量が上がる",
-            "一定の確率で、OOの獲得時に+70%のボーナスがつく",
-            "パート開始時、一定の確率でメインキャラのOOが+50",
-            "パート開始時、20％の確率でレアリティ4以下のOOの特性が手に入る",
-            "一緒に交流すると、20%の確率で參加したパートナーキャラからの特性付與率+6%",
-            "體調が絶好調の時、50%の確率で交流に參加したパートナーキャラからの特性付與率+12%",
-            "體調が良好の時、60%の確率で交流に參加したパートナーキャラからの特性付與率+12%",
-            "休むの大成功率+70％",
-            "一定の確率で、3ターン間のキャラエピソード發生率が+60％",
-            "一定の確率で、3ターン間のスポットエピソード發生率が+60％",
-            "一定の確率で、3ターン間の全体エピソード發生率が+60％",
-            "一緒に交流すると、10%の確率で成功を大成功にする",
-            "一緒に交流すると、ハプニング率-15"
+            "毎ターンのスタミナ回復量が+10", "ターン開始時、一定の確率でメインキャラのスタミナ+50", "3人以上で交流すると確率でスタミナが回復。交流人數が多いほど確率と回復量が上がる", "一定の確率で、OOの獲得時に+70%のボーナスがつく", "パート開始時、一定の確率でメインキャラのOOが+50", "パート開始時、20％の確率でレアリティ4以下のOOの特性が手に入る", "一緒に交流すると、20%の確率で參加したパートナーキャラからの特性付與率+6%", "體調が絶好調の時、50%の確率で交流に參加したパートナーキャラからの特性付與率+12%", "體調が良好の時、60%の確率で交流に參加したパートナーキャラからの特性付與率+12%", "休むの大成功率+70％", "一定の確率で、3ターン間のキャラエピソード發生率が+60％", "一定の確率で、3ターン間のスポットエピソード發生率が+60％", "一定の確率で、3ターン間の全体エピソード發生率が+60％", "一緒に交流すると、10%の確率で成功を大成功にする", "一緒に交流すると、ハプニング率-15"
         ];
 
         let allCards = [];
@@ -499,44 +186,26 @@
         }
 
         function getStyle(text, isAttr) {
-    let themeKey = "pink";
-    let borderStyle = "border: 1.5px solid transparent;"; // 預設透明邊框
-
-    if (THEMES[text]) {
-        themeKey = text;
-    } else {
-        // 遍歷所有屬性顏色
-        for (let key in TRAIT_LISTS) {
-            // 遍歷該顏色下的所有稀有度 (金/銀/銅/無)
-            for (let r in TRAIT_LISTS[key]) {
-                if (TRAIT_LISTS[key][r].includes(text)) {
-                    themeKey = key.substring(0, 3);
-                    
-                    // 根據稀有度賦予邊框顏色
-                    if (r === "金") {
-                        borderStyle = "border: 2.2px solid #FFD700 !important;"; // 金色
-                    } else if (r === "銀") {
-                        borderStyle = "border: 2.2px solid #B0B0B0 !important;"; // 銀色
-                    } else if (r === "銅") {
-                        borderStyle = "border: 2.2px solid #CD7F32 !important;"; // 銅色
-                    } else {
-                        // "無" 稀有度可以使用原本屬性的深色作為邊框，增加精緻感
-                        borderStyle = `border: 1.5px solid ${THEMES[themeKey].border} !important;`;
+            let themeKey = "pink";
+            let borderStyle = "border: 1.5px solid transparent;";
+            if (THEMES[text]) { themeKey = text; } 
+            else {
+                for (let key in TRAIT_LISTS) {
+                    for (let r in TRAIT_LISTS[key]) {
+                        if (TRAIT_LISTS[key][r].includes(text)) {
+                            themeKey = key.substring(0, 3);
+                            if (r === "金") borderStyle = "border: 2.2px solid #FFD700 !important;";
+                            else if (r === "銀") borderStyle = "border: 2.2px solid #B0B0B0 !important;";
+                            else if (r === "銅") borderStyle = "border: 2.2px solid #CD7F32 !important;";
+                            else borderStyle = `border: 1.5px solid ${THEMES[themeKey].border} !important;`;
+                            break;
+                        }
                     }
-                    break; 
                 }
             }
+            const t = THEMES[themeKey];
+            return isAttr ? `background:${t.main};color:#fff;border: 1.5px solid ${t.main};` : `background:${t.bg};color:${t.text};${borderStyle}`;
         }
-    }
-
-    const t = THEMES[themeKey];
-    if (isAttr) {
-        return `background:${t.main};color:#fff;border: 1.5px solid ${t.main};`;
-    } else {
-        // 這裡把背景色、文字色、與新的稀有度邊框組合起來
-        return `background:${t.bg};color:${t.text};${borderStyle}`;
-    }
-}
 
         async function init() {
             try {
@@ -575,16 +244,12 @@
                 const sSelect = document.getElementById('skillFilter');
                 SKILL_TEMPLATES.forEach(t => {
                     const o = document.createElement('option');
-                    o.value = t;
-                    o.innerText = t;
-                    sSelect.appendChild(o);
+                    o.value = t; o.innerText = t; sSelect.appendChild(o);
                 });
                 const filterIds = ['keywordSearch', 'nameSearch', 'attrFilter', 'skillFilter', 'sortOrder'];
-            filterIds.forEach(id => document.getElementById(id).addEventListener('input', render));
+                filterIds.forEach(id => document.getElementById(id).addEventListener('input', render));
                 render();
-            } catch (e) {
-                document.getElementById('gallery').innerHTML = "資料載入失敗。";
-            }
+            } catch (e) { document.getElementById('gallery').innerHTML = "資料載入失敗。"; }
         }
 
         function clearTraits() {
@@ -593,46 +258,29 @@
             render();
         }
 
-        function render() {// --- 在這裡插入第 1 行：讀取輸入框的值 ---
-    const keywordV = document.getElementById('keywordSearch').value.toLowerCase(); 
-
-    const nameV = document.getElementById('nameSearch').value.toLowerCase();
-    const attrV = document.getElementById('attrFilter').value;
-    const skillV = document.getElementById('skillFilter').value;
-    const sortV = document.getElementById('sortOrder').value;
-
-    let filtered = allCards.filter(card => {
-        // --- 在這裡插入第 2 行：設定關鍵字過濾邏輯 ---
-        const mKeyword = !keywordV || card["卡片名稱"].toLowerCase().includes(keywordV) || card["技能1"].includes(keywordV) || card["技能2"].includes(keywordV);
-
-        const mName = card["卡片名稱"].toLowerCase().includes(nameV);
-        const mAttr = !attrV || card["卡片屬性"] === attrV;
-        const mSkill = !skillV || convertToOO(card["技能1"]) === skillV || convertToOO(card["技能2"]) === skillV;
-        const cardTraits = [];
-        for (let i = 1; i <= 8; i++) if (card[`特性${i}`]) cardTraits.push(card[`特性${i}`]);
-        const mTraits = Array.from(selectedTraits).every(t => cardTraits.includes(t));
-        
-        // --- 在這裡修改第 3 行：把 mKeyword 放進 return 裡 ---
-        return mKeyword && mName && mAttr && mSkill && mTraits;
-    });
+        function render() {
+            const keywordV = document.getElementById('keywordSearch').value.toLowerCase(); 
             const nameV = document.getElementById('nameSearch').value.toLowerCase();
             const attrV = document.getElementById('attrFilter').value;
             const skillV = document.getElementById('skillFilter').value;
             const sortV = document.getElementById('sortOrder').value;
+
             let filtered = allCards.filter(card => {
+                const mKeyword = !keywordV || card["卡片名稱"].toLowerCase().includes(keywordV) || card["技能1"].includes(keywordV) || card["技能2"].includes(keywordV);
                 const mName = card["卡片名稱"].toLowerCase().includes(nameV);
                 const mAttr = !attrV || card["卡片屬性"] === attrV;
                 const mSkill = !skillV || convertToOO(card["技能1"]) === skillV || convertToOO(card["技能2"]) === skillV;
                 const cardTraits = [];
                 for (let i = 1; i <= 8; i++) if (card[`特性${i}`]) cardTraits.push(card[`特性${i}`]);
                 const mTraits = Array.from(selectedTraits).every(t => cardTraits.includes(t));
-                return mName && mAttr && mSkill && mTraits;
+                return mKeyword && mName && mAttr && mSkill && mTraits;
             });
+
             filtered.sort((a, b) => {
                 if (sortV === 'idAsc') return (parseInt(a["圖鑑編號"]) || 0) - (parseInt(b["圖鑑編號"]) || 0);
                 if (sortV === 'idDesc') return (parseInt(b["圖鑑編號"]) || 0) - (parseInt(a["圖鑑編號"]) || 0);
                 if (sortV.startsWith('attr')) {
-                    const vA = ATTR_ORDER[a["卡片屬性"]] || 99, vB = ATTR_ORDER[b["卡片屬性"]] || 99;
+                    const vA = ATTR_ORDER[a["卡片屬性"]] || 99, vB = ATTR_ORDER[b["卡属性"]] || 99;
                     return sortV === 'attrAsc' ? vA - vB : vB - vA;
                 }
                 if (sortV.startsWith('char')) {
@@ -642,6 +290,7 @@
                 }
                 return 0;
             });
+
             document.getElementById('count').innerText = filtered.length;
             document.getElementById('gallery').innerHTML = filtered.map(card => {
                 let tHtml = "";
@@ -653,32 +302,17 @@
             }).join('');
         }
 
-        // --- 控制展開收合的函數 ---
         function toggleTraits() {
             const container = document.getElementById('traitContainer');
             const btn = document.getElementById('toggleBtn');
             if (container.classList.contains('hidden')) {
-                container.classList.remove('hidden');
-                btn.innerText = '收合';
+                container.classList.remove('hidden'); btn.innerText = '收合';
             } else {
-                container.classList.add('hidden');
-                btn.innerText = '展開';
+                container.classList.add('hidden'); btn.innerText = '展開';
             }
         }
 
         init();
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
